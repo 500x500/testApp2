@@ -1,0 +1,62 @@
+<mat-card>
+<button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
+  {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
+</button>
+<mat-horizontal-stepper [linear]="isLinear" #stepper >
+  <mat-step [stepControl]="name">
+    <form [formGroup]="name" (ngSubmit)="ngSubmit($emit)">
+      <ng-template matStepLabel>ФИО</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="Фамилия, Имя, Отчество" formControlName="firstCtrl" required>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperNext>Далее</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="dob">
+    <form [formGroup]="dob" (ngSubmit)="ngSubmit($emit)">
+      <ng-template matStepLabel>Дата рождения</ng-template>
+      <mat-form-field>
+        <input type="date" min="1900-01-01" [max]="today" matInput formControlName="secondCtrl" required>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Назад</button>
+        <button mat-button matStepperNext>Вперед</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="gender">
+    <form [formGroup]="gender" >
+      <ng-template matStepLabel>Ваш Пол</ng-template>
+      <mat-form-field>
+        <mat-label>Ваш пол</mat-label>
+        <mat-select (selectionChange)="selectionChange($emit)">
+          <mat-option *ngFor="let gender of genders" [value]="gender.value">
+            {{gender.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Назад</button>
+        <button mat-button matStepperNext>Вперед</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="snils">
+    <form [formGroup]="snils" (ngSubmit)="ngSubmit($emit)">
+    <ng-template matStepLabel>СНИЛС</ng-template>
+    <input matInput placeholder="Введите номер СНИЛС" formControlName="fourthCtrl" required>
+    <div>
+      <button mat-button matStepperPrevious>Назад</button>
+      <button mat-button type='submit' (click)="addUser()">Добавить</button>
+    </div>
+    </form>
+  </mat-step>
+</mat-horizontal-stepper>
+</mat-card>
+
+
+<!--formone.ngSubmit.emit(); formtwo.ngSubmit.emit();
+      formthree.ngSubmit.emit(); formfour.ngSubmit.emit(); stepper.reset() !-->
+
